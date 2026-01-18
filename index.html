@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NEO Store — Minimal Dropshipping</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0c0f;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --muted2: rgba(255,255,255,.52);
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% 5%, rgba(99,102,241,.22), transparent 60%),
+        radial-gradient(900px 520px at 90% 10%, rgba(16,185,129,.14), transparent 65%),
+        var(--bg);
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max);margin:0 auto;padding:0 18px}
+
+    .muted{color:var(--muted)}
+    .fineprint{color:var(--muted2);font-size:12px;line-height:1.4;margin:10px 0 0}
+
+    .section{padding:64px 0}
+    .section-alt{background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));}
+
+    .site-header{padding:18px 0 40px;border-bottom:1px solid var(--border)}
+    .nav{
+      display:flex;align-items:center;gap:16px;
+      padding:12px 0;
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .brand-mark{
+      width:12px;height:12px;border-radius:999px;
+      background: linear-gradient(135deg, rgba(99,102,241,1), rgba(16,185,129,1));
+      box-shadow: 0 0 0 6px rgba(255,255,255,.05);
+    }
+    .brand-name{font-size:16px}
+
+    .menu{display:flex;gap:14px;margin-left:18px;flex:1}
+    .menu a{color:var(--muted);font-weight:500}
+    .menu a:hover{color:var(--text)}
+
+    .nav-actions{display:flex;gap:10px}
+    .burger{
+      display:none;
+      margin-left:auto;
+      background:transparent;border:1px solid var(--border);
+      border-radius:12px;padding:10px;cursor:pointer;
+    }
+    .burger span{display:block;width:18px;height:2px;background:var(--text);margin:4px 0;opacity:.85}
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:26px;
+      padding-top:22px;
+      align-items:stretch;
+    }
+    .kicker{
+      display:inline-flex;align-items:center;gap:8px;
+      color: var(--muted);
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      padding:8px 12px;border-radius:999px;
+      font-weight:600;font-size:12px;
+    }
+    .hero-copy h1{
+      margin:14px 0 10px;
+      font-size: clamp(32px, 4.2vw, 52px);
+      line-height:1.05;
+    }
+    .sub{color:var(--muted);max-width:58ch;line-height:1.6;margin:0 0 18px}
+    .hero-ctas{display:flex;gap:10px;flex-wrap:wrap}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:12px 14px;border-radius:14px;
+      border:1px solid var(--border);
+      font-weight:700;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn-solid{
+      background: rgba(255,255,255,.92);
+      color: #0b0c0f;
+      border-color: rgba(255,255,255,.65);
+    }
+    .btn-ghost{background: rgba(255,255,255,.02);color:var(--text)}
+    .btn-full{width:100%}
+    .btn-sm{padding:10px 12px;border-radius:12px;font-weight:700}
+
+    .trust-row{
+      display:flex;gap:14px;flex-wrap:wrap;
+      margin-top:18px;
+    }
+    .trust{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px 12px;border:1px solid var(--border);
+      border-radius:var(--radius);
+      background: rgba(255,255,255,.03);
+      min-width: 210px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: rgba(255,255,255,.78);
+      margin-top:4px;
+      opacity:.9;
+    }
+    .trust-title{font-weight:800;font-size:13px}
+    .trust-sub{color:var(--muted);font-size:12px;margin-top:2px}
+
+    .hero-card{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:flex;flex-direction:column;
+    }
+    .hero-media{padding:16px}
+    .img-skeleton{
+      width:100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 18px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.10), rgba(255,255,255,.06));
+      background-size: 200% 100%;
+      animation: shimmer 1.6s infinite linear;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    @keyframes shimmer{
+      0%{background-position:0% 0}
+      100%{background-position:200% 0}
+    }
+    .hero-card-body{padding:0 16px 16px}
+    .pill{
+      display:inline-block;
+      font-size:12px;font-weight:800;color:var(--text);
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      padding:6px 10px;border-radius:999px;
+    }
+    .hero-card-body h3{margin:10px 0 6px}
+    .price-row{display:flex;align-items:baseline;gap:10px;margin:10px 0 12px}
+    .price{font-weight:900}
+    .compare{color:var(--muted2);text-decoration:line-through;font-size:13px}
+
+    .section-head{
+      display:flex;align-items:flex-end;justify-content:space-between;
+      gap:16px;margin-bottom:18px;
+    }
+    .section-head h2{margin:0;font-size:28px}
+    .section-head p{margin:8px 0 0}
+
+    .filters{display:flex;gap:8px}
+    .chip{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      color: var(--muted);
+      padding:10px 12px;border-radius:999px;
+      font-weight:700;cursor:pointer;
+    }
+    .chip.is-active{background: rgba(255,255,255,.08);color:var(--text)}
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    .card{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.03);
+      overflow:hidden;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .card:hover{transform: translateY(-2px);border-color: rgba(255,255,255,.22)}
+    .card-media{position:relative;padding:12px}
+    .badge{
+      position:absolute;top:18px;left:18px;
+      font-size:12px;font-weight:900;
+      padding:7px 10px;border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.16);
+    }
+    .card-body{padding:0 14px 14px}
+    .card-title{margin:10px 0 6px;font-size:16px}
+    .card-desc{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.5}
+    .card-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+
+    .features{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .feature{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.03);
+      padding:16px;
+    }
+    .feature h3{margin:0 0 6px}
+    .feature p{margin:0;line-height:1.6}
+
+    .faq{display:grid;gap:10px;max-width: 820px}
+    details{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.03);
+      padding:14px 16px;
+    }
+    summary{cursor:pointer;font-weight:900}
+    details p{margin:10px 0 0;color:var(--muted);line-height:1.6}
+
+    .contact{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:18px;
+      align-items:start;
+    }
+    .contact-cards{display:grid;gap:10px;margin-top:14px}
+    .contact-card{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.03);
+      padding:14px 16px;
+    }
+    .label{color:var(--muted2);font-size:12px;font-weight:700}
+    .value{margin-top:6px;font-weight:900}
+
+    .form{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.03);
+      padding:16px;
+    }
+    label{display:block;font-weight:800;font-size:13px;margin-bottom:10px}
+    input,textarea{
+      width:100%;
+      margin-top:8px;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      outline:none;
+    }
+    input:focus,textarea:focus{border-color: rgba(255,255,255,.28)}
+
+    .footer{padding:36px 0;border-top:1px solid var(--border)}
+    .footer-inner{display:grid;gap:14px}
+    .footer-links{display:flex;gap:14px;flex-wrap:wrap}
+    .footer-links a{color:var(--muted)}
+    .footer-links a:hover{color:var(--text)}
+    .footer-bottom{margin-top:6px}
+
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns: repeat(2, 1fr)}
+      .features{grid-template-columns:1fr}
+      .contact{grid-template-columns:1fr}
+      .menu{display:none}
+      .burger{display:inline-block}
+      .nav-actions{display:none}
+      .menu.is-open{
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        padding:12px 0 6px;
+      }
+    }
+
+    @media (max-width: 520px){
+      .grid{grid-template-columns: 1fr}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#">
+        <span class="brand-mark"></span>
+        <span class="brand-name">NEO</span>
+      </a>
+
+      <nav class="menu" aria-label="Main navigation">
+        <a href="#products">Бүтээгдэхүүн</a>
+        <a href="#why">Яагаад бид?</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Холбоо барих</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#products">Shop</a>
+        <a class="btn btn-solid" href="#contact">Order</a>
+      </div>
+
+      <button class="burger" aria-label="Open menu" aria-expanded="false" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="container hero">
+      <div class="hero-copy">
+        <p class="kicker">Curated • Clean • Fast</p>
+        <h1>Minimal design, maximum quality.</h1>
+        <p class="sub">
+          Чанартай, сонгож авсан бүтээгдэхүүнүүд. Ил тод хүргэлт, амархан буцаалт,
+          хурдан үйлчилгээ — брэнд шиг мэдрэмжтэй дэлгүүр.
+        </p>
+
+        <div class="hero-ctas">
+          <a class="btn btn-solid" href="#products">Бүтээгдэхүүн үзэх</a>
+          <a class="btn btn-ghost" href="#why">Дэлгэрэнгүй</a>
+        </div>
+
+        <div class="trust-row" aria-label="Trust badges">
+          <div class="trust">
+            <span class="dot"></span>
+            <div>
+              <div class="trust-title">Ил тод хүргэлт</div>
+              <div class="trust-sub">Хугацаа, үнэ тодорхой</div>
+            </div>
+          </div>
+          <div class="trust">
+            <span class="dot"></span>
+            <div>
+              <div class="trust-title">Easy return</div>
+              <div class="trust-sub">Буцаалт/солилт</div>
+            </div>
+          </div>
+          <div class="trust">
+            <span class="dot"></span>
+            <div>
+              <div class="trust-title">Support</div>
+              <div class="trust-sub">24/7 DM/Email</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-card" aria-label="Featured product">
+        <div class="hero-media">
+          <div class="img-skeleton"></div>
+        </div>
+        <div class="hero-card-body">
+          <div class="pill">Featured</div>
+          <h3>Premium Product Name</h3>
+          <p class="muted">Short one-line value proposition goes here.</p>
+          <div class="price-row">
+            <span class="price">₮ 89,900</span>
+            <span class="compare">₮ 119,900</span>
+          </div>
+          <a class="btn btn-solid btn-full" href="#products">Add to cart (demo)</a>
+          <p class="fineprint">*Одоогоор demo UI. Дараа нь checkout-т холбож өгнө.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="products" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Best sellers</h2>
+            <p class="muted">3–12 бүтээгдэхүүнээр эхлээд “брэнд” шиг харагдуул.</p>
+          </div>
+
+          <div class="filters" aria-label="Filters">
+            <button class="chip is-active" type="button">All</button>
+            <button class="chip" type="button">New</button>
+            <button class="chip" type="button">Top</button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="card-media">
+              <div class="img-skeleton"></div>
+              <span class="badge">New</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Product One</h3>
+              <p class="card-desc">Short benefit statement. Clean, simple, premium.</p>
+              <div class="card-row">
+                <span class="price">₮ 59,900</span>
+                <a class="btn btn-ghost btn-sm" href="#contact">Захиалах</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <div class="img-skeleton"></div>
+              <span class="badge">Top</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Product Two</h3>
+              <p class="card-desc">Minimal product description. 1–2 lines only.</p>
+              <div class="card-row">
+                <span class="price">₮ 79,900</span>
+                <a class="btn btn-ghost btn-sm" href="#contact">Захиалах</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <div class="img-skeleton"></div>
+              <span class="badge">Sale</span>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Product Three</h3>
+              <p class="card-desc">If you have reviews, show them later.</p>
+              <div class="card-row">
+                <span class="price">₮ 49,900</span>
+                <a class="btn btn-ghost btn-sm" href="#contact">Захиалах</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-media">
+              <div class="img-skeleton"></div>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">Product Four</h3>
+              <p class="card-desc">Keep the grid consistent for “quality” feel.</p>
+              <div class="card-row">
+                <span class="price">₮ 99,900</span>
+                <a class="btn btn-ghost btn-sm" href="#contact">Захиалах</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Яагаад энэ store?</h2>
+            <p class="muted">Temu/Taobao/Alibaba-аас авахдаа бид “curation + quality check” дээр төвлөрнө.</p>
+          </div>
+        </div>
+
+        <div class="features">
+          <div class="feature">
+            <h3>Curated products</h3>
+            <p class="muted">Олон бараа биш — сонгож авсан цөөн бүтээгдэхүүн.</p>
+          </div>
+          <div class="feature">
+            <h3>Ил тод хүргэлт</h3>
+            <p class="muted">Хугацаа, өртөг, нөхцөл — бүгдийг тодорхой бичнэ.</p>
+          </div>
+          <div class="feature">
+            <h3>Support & policies</h3>
+            <p class="muted">Contact, returns, FAQ бүгд ойлгомжтой.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>FAQ</h2>
+            <p class="muted">Чанартай store гэдэг бол “асуултад хариулсан” store.</p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <details>
+            <summary>Хүргэлт хэд хоног вэ?</summary>
+            <p>Бүтээгдэхүүнээсээ хамаараад 7–20 хоног. Product дээр тодорхой бичнэ.</p>
+          </details>
+          <details>
+            <summary>Буцаалт/солилт байна уу?</summary>
+            <p>Тийм. Хугацаа, нөхцөлийг Returns policy дээр тодорхой бичнэ.</p>
+          </details>
+          <details>
+            <summary>Төлбөрийг яаж хийх вэ?</summary>
+            <p>Одоогоор demo UI. Дараа нь Stripe/Shopify/Snipcart зэрэг checkout-т холбож болно.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-alt">
+      <div class="container contact">
+        <div>
+          <h2>Захиалга өгөх</h2>
+          <p class="muted">Энд contact form хийж болно (дараа нь Formspree / backend холбоно).</p>
+
+          <div class="contact-cards">
+            <div class="contact-card">
+              <div class="label">Email</div>
+              <div class="value">yourbrand@email.com</div>
+            </div>
+            <div class="contact-card">
+              <div class="label">Instagram</div>
+              <div class="value">@yourbrand</div>
+            </div>
+          </div>
+        </div>
+
+        <form class="form" action="#" method="post">
+          <label>
+            Нэр
+            <input type="text" name="name" placeholder="Таны нэр" required />
+          </label>
+          <label>
+            Утас / Email
+            <input type="text" name="contact" placeholder="9900xxxx / email" required />
+          </label>
+          <label>
+            Захиалах бүтээгдэхүүн
+            <input type="text" name="product" placeholder="Product name / линк" required />
+          </label>
+          <label>
+            Тайлбар
+            <textarea name="note" rows="4" placeholder="Өнгө/хэмжээ гэх мэт"></textarea>
+          </label>
+          <button class="btn btn-solid btn-full" type="submit">Илгээх (demo)</button>
+          <p class="fineprint">*Form ажиллуулахын тулд Formspree/Netlify Forms гэх мэт рүү холбоно.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name">NEO</span>
+        </div>
+        <p class="muted">Minimal store template. Built with HTML/CSS.</p>
+      </div>
+
+      <div class="footer-links">
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+
+      <div class="footer-bottom muted">© 2026 NEO Store</div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const burger = document.querySelector('.burger');
+    const menu = document.querySelector('.menu');
+    burger?.addEventListener('click', () => {
+      const open = menu.classList.toggle('is-open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  </script>
+</body>
+</html>
